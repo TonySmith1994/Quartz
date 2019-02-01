@@ -1,5 +1,6 @@
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.*;
+import org.quartz.impl.StdSchedulerFactory;
 
 /**
  * 定时器管理类，管理job[比SchedulerUtil更多的使用方法]
@@ -7,6 +8,17 @@ import org.quartz.*;
 public class QuartzManager {
 
     private Scheduler scheduler;
+
+    {
+        // 通过schedulerFactory获取一个调度器
+        SchedulerFactory schedulerfactory = new StdSchedulerFactory();
+        // 通过schedulerFactory获取一个调度器
+        try {
+            scheduler = schedulerfactory.getScheduler();
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param jobName          任务名
@@ -128,16 +140,7 @@ public class QuartzManager {
         }
     }
 
-    public Scheduler getScheduler() {
-        return scheduler;
-    }
-
-    public void setScheduler(Scheduler scheduler) {
-        this.scheduler = scheduler;
-    }
-
     /**
-     *
      * @param time
      * @return
      * @deprecated 时间转换
